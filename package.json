@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@directus/sdk": "^12.0.0",
+    "@directus/sdk": "^12.1.0",
     "@hookform/resolvers": "^3.3.1",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",

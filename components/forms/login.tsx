@@ -61,20 +61,6 @@ export default function LoginForm() {
     }
   }
 
-  const handleGoogleLogin = async () => {
-    openedWindow = window.opener(
-      `${process.env.NEXT_PUBLIC_DIRECTUS_API}/auth/login/google`
-    )
-
-    let timer = setInterval(function () {
-      console.log("openedWindow", openedWindow.location)
-      if (openedWindow.closed) {
-        clearInterval(timer)
-        alert("closed")
-      }
-    }, 1000)
-  }
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
@@ -129,7 +115,9 @@ export default function LoginForm() {
         <Button disabled={isLoading} type="submit">
           {isLoading && <Spinner />} Login
         </Button>
-        <a href="https://tramdot.up.railway.app/auth/login/google?redirect=http://localhost:3000/">
+        <a
+          href={`https://tramdot.up.railway.app/auth/login/google?redirect=${process.env.NEXTAUTH_URL}`}
+        >
           Google Login
         </a>
       </form>
