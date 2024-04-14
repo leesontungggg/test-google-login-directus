@@ -28,7 +28,8 @@ const formSchema = z.object({
   password: z.string().nonempty({ message: "Password is required" }),
 })
 
-export default function LoginForm() {
+export default function LoginForm({ result }: any) {
+  console.log("result", result)
   let openedWindow: any
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
@@ -59,6 +60,20 @@ export default function LoginForm() {
     } else {
       router.push("/")
     }
+  }
+
+  const handleGoogleLogin = async () => {
+    openedWindow = window.open(
+      `${process.env.NEXT_PUBLIC_DIRECTUS_API}/auth/login/google?redirect=https://test-google-login-directus.vercel.app`
+    )
+
+    let timer = setInterval(function () {
+      console.log("openedWindow", openedWindow.location)
+      if (openedWindow.closed) {
+        clearInterval(timer)
+        alert("closed")
+      }
+    }, 1000)
   }
 
   return (
@@ -115,11 +130,7 @@ export default function LoginForm() {
         <Button disabled={isLoading} type="submit">
           {isLoading && <Spinner />} Login
         </Button>
-        <a
-          href={`https://tramdot.up.railway.app/auth/login/google?redirect=${process.env.NEXTAUTH_URL}`}
-        >
-          Google Login
-        </a>
+        <a onClick={handleGoogleLogin}>Google Login</a>
       </form>
     </Form>
   )
